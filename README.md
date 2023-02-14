@@ -174,3 +174,11 @@ We save the classification models and included a second jupyter notebook with co
 
 3. Below is a summary of metrics from difference classifiers
 ![Table.png](plots/Table.png)
+
+## Future Work, Next Steps
+
+1.  At the time of this report, lessons on Random Forest, Bagging and bootstraping, AdaBoost, GBM, and XGB were not taught yet.  After learning more I will go back and add or refine the analysis. Since the dataset is small, only 1440 rows, then bootstrap resampling may help. 
+
+2. The raw features are the moment tensor elements (Mxx, Myy, Mzz, Mxy, Mxz, Mxz). From PCA, eigen-values are derived from these features.  Further-more, lune_lat and lune_long are derived from eigenvalues.  Therefore there is high correlation of all the features (duplicate) leading to population overlap and potential for overfitting. The next step is to try and compare the classification by using these individually rather than all together.
+
+
