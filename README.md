@@ -46,14 +46,15 @@ label     0.177268 -0.049500  0.054804  0.059154  0.100827  1.000000
 
 Seaborn heatmap of correlation values
  
+![seaborn_heatmap_corr.png](plots/seaborn_heatmap_corr.png)
 
 Seaborn Pairplot
 
+![seaborn_pairplot.png](plots/seaborn_pairplot.png)
+
 Seaborn Scatter plot
  
-
-
- 
+![seaborn_scatterplot.png](plots/seaborn_scatterplot.png)
 
 ### PCA analysis
 
@@ -70,8 +71,6 @@ explained_variance_ratio = [ 0.77  0.23  0.00  0.00  0.00  0.00]
 singular_values = [ 81.78  44.18  0.04  0.02  0.00  0.00]
 </pre>
 
- 
- 
 We are still working on PCA analysis but so far this is leading to unstable decision boundaries.  We are for now only using lune_lat and lune_lon
 
 ## Modeling
@@ -130,24 +129,23 @@ Table of scores and metrics for SVC classifier
  
 Confusion matrix for SVC classifier.
 
-
+![svc_confusion_matrix.png](plots/svc_confusion_matrix.png)
  
 ROC curve for SVC 
 
- 
+![svc_roc.png](plots/svc_roc.png)
+
 Precision-Recall curve for SVC
+
+![svc_precision_recall_curves.png](plots/svc_precision_recall_curves.png)
 
 To evaluate the classifiers, we simulate 50,000 randomly distributed input features to compute class probabilities using clf.predict_proba(X)
 
-
- 
-
+![gpc.lune.jpg](plots/gpc.lune.jpg)
 
 Classification decision boundaries and class probabilities for GPC classifier
- 
 
- 
-
+![svc.lune.jpg](plots/svc.lune.jpg)
 
 Classification decision boundaries and class probabilities for SVC classifier 
 
