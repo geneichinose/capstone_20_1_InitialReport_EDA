@@ -84,7 +84,7 @@ We are still working on PCA analysis but so far this is leading to unstable deci
 ## Modeling
 
 1. Training testing split (train 60%; testing 40%)
-2. See up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
+2. Set up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
   * See list of 10 classifiers below
 3. Set up pipeline
   * Standard scalar 
