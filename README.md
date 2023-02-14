@@ -165,3 +165,6 @@ We save the classification models and included a second jupyter notebook with co
 1. The best set of features are lune_lat and lune_lon.  Adding additional features Mxx, Myy, ..., eig1, eig2, eig3 only caused overfitting and unstable decision bondaries. 
 
 2. SVC classifier works best so far but we are still evaluating 9 other classifier methods.
+
+3. Below is a summary of metrics from difference classifiers
+![Table.png](plots/Table.png)
