@@ -114,6 +114,7 @@ For the modeling we tested 10 classifiers:
 
 ## Evaluation
 
+<pre>
               precision    recall  f1-score   support
 
           eq       0.99      0.93      0.96       464
@@ -123,6 +124,7 @@ For the modeling we tested 10 classifiers:
     accuracy                           0.94       576
    macro avg       0.86      0.97      0.90       576
 weighted avg       0.95      0.94      0.94       576
+</pre>
 
 Table of scores and metrics for SVC classifier
  
