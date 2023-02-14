@@ -92,27 +92,32 @@ We are still working on PCA analysis but so far this is leading to unstable deci
 ## Modeling
 
 1. Training testing split (train 60%; testing 40%)
-2. Set up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
+2. Test sets of features:
+  * features = ['lune_lat', 'lune_lon', 'mxx', 'myy', 'mzz', 'mxy', 'mxz', 'myz', 'eig1', 'eig2', 'eig3']
+  * features = ['lune_lat', 'lune_lon']
+  * features = ['mxx', 'myy', 'mzz', 'mxy', 'mxz', 'myz']
+  * features = ['eig1', 'eig2', 'eig3']
+3. Set up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
   * See list of 10 classifiers below
-3. Set up pipeline
+4. Set up pipeline
   * Standard scalar 
   * Classifier with one-vs-rest
-4. Set up hyperparameter search ranges (these depend on which classifier)
-5. Grid search over hyperparameter
+5. Set up hyperparameter search ranges (these depend on which classifier)
+6. Grid search over hyperparameter
   * Use 5-fold cross validation
   * Scoring = ‘balanced_accuracy’
   * Balanced accuracy = (sensitivity + specificity)/ 2
   * Sensitivity = recall = TP / (TP + FN)
   * Specificity = TN / (TN + FP)
-6. Save the model to a disk file for later predictions
-7. Make a Pandas DataFrame table of scores and metric values
+7. Save the model to a disk file for later predictions
+8. Make a Pandas DataFrame table of scores and metric values
   * Class precision, recall, f1-score
   * Accuracy
   * Macro average
   * Weighted average
-8. Compute the multiclass values for TP, TN, FP, and FN and plot confusion matrix
-9. Plot multiclass ROC and average ROC curves, compare AUC values
-10. When classifiers have clf.decision_function() method then plot the multiclass precsion and recall curves.
+9. Compute the multiclass values for TP, TN, FP, and FN and plot confusion matrix
+10. Plot multiclass ROC and average ROC curves, compare AUC values
+11. When classifiers have clf.decision_function() method then plot the multiclass precsion and recall curves.
 
 For the modeling we tested 10 classifiers: 
 1. Support Vector Machine (SVC) 
