@@ -1,4 +1,5 @@
 Capstone Project 20.1: Initial Report and Exploratory Data Analysis
+version 02/14/2023
 
 Business Understanding
 
@@ -8,3 +9,43 @@ State-of-the-art algorithms developed in the 1980s and 1990s automatically proce
 Early focus was on seismic signal detection (e.g., Ross et al., 2018; Kong et al., 2018; Mousavi et al., 2020) using deep learning approaches. We focus here on the final step of seismic processing workflow – discrimination or identification -- that requires classifying a set of signals from a seismic event as either explosion, earthquake or collapse based on the radiation pattern of the signals recorded by a network of sensors. 
 
 In the world of nuclear explosion monitoring, the mantra is “miss no explosion” even at the expense of having false alarms.  The consequences of missed detection is much higher than falsely accusing a nation for testing a nuclear weapon (see new article on the 1997 Kara Sea Event).   In this case we will focus more on metrics like precision and balanced accuracy than recall, f1-score, or accuracy. 
+
+Data Understanding
+
+The data features that we use are output from a physic based model of a seismic source. Seismic waveform time-series from a network of sensors can be fit using complex models that replicate the waveforms given an earth propagation response to a generalized model of the seismic source represented as a set of forces.  The data that we use here are called moment tensors determined from the linear inversion of seismic ground motions.  
+
+The moment tensor (MT) is a mathematical representation of a generalized seismic source that quantify a set of forces and orientations based on the source’s radiation pattern.  The MT is mathematically represented as a 2nd-order symmetric tensor expressed as a 3-by-3 matrix (i.e., as three shear force couples and three linear vector dipole forces).  In a Cartesian coordinate system (i.e., x-axis: +east/-west, y-axis: +north/-south, z-axis: +up/-down), the dipole forces are contained along the diagonal Mxx, Myy, and Mzz of the tensor.  The off-diagonal elements Mxy, Mxz, and Myz contain the shear force couples. Through the conservation of angular momentum, there are two force-couples (a.k.a. the double-couple), with one acting in the opposite direction to the other. The MT is symmetrical and therefore Mxy=Myx, Mxz=Mzx, and Myz=Mzy resulting in only six of nine unique tensor elements, that can also be in vector form M (see MT diagram).  
+
+We have compiled a set of moment tensor solutions from 1440 earthquakes, explosions, and cavity collapses. Collapses associated with mining activity and underground nuclear explosions are based on a preliminary small set of 43 events (Pasyanos et al., 2023; in prep). For explosions, we use the MT database for explosions from Pasyanos and Chiang (2022).  For the earthquake population, we use the same full MT solution dataset that was used for event identification in Pasyanos and Chiang (2021).  This includes the datasets of Dreger et al. (2000), Minson and Dreger (2008), Ford et al. (2009a), Boyd et al. (2015). The class labels for this dataset assumes that seismic events reported by the USGS are natural earthquakes.  The explosions are mainly from underground U.S. testing in southern Nevada (Department of Energy publication NV-209) but other chemical explosions and mining accidents worldwide are reported in news media. 
+
+Data Preparation
+
+We used principal component analysis (PCA) to convert the 6 moment tensor elements (Mxx, Myy, Mzz, Mxy, Mxz, Myz) to 3 eigenvalues (eig1, eig2, eig3).  We also convert these 3-eigenvalues using a projection to spherical space (e.g., Tape and Tape, 2012) reducing the 3 eigenvalues to lune latitude and longitude.  The lune is a crescent-shape portion of a sphere (in this case just one-sixth of the full sphere) and latitude and longitude are adapted from the coordinates system commonly used in geography. The lune latitude is a measure of the seismic source’s isotropic component. The lune longitude is a measure of the compensated linear vector dipole.  All pure double-couple source “earthquakes” plot at the origin (latitude=0 and longitude=0; eig1=-1, eig2=0, eig3=+1). All pure explosions plot at the north pole (latitude=+90, longitude=0; eig1=+1, eig2=+1, eig3=+1) and all pure implosions plot at the south pole (latitude=-90, longitude=0; eig1=-1, eig2=-1, eig3=-1).  Interestingly, most nuclear explosions plot as an opening crack (latitude=60, longitude=-30; eig1=+1, eig2=+1, eig3=+2) and mine collapses as a closing crack (latitude=-60, longitude=+30; eig1=-1, eig2=-1, eig3=-2).   
+
+The original input features used to train the classifier models are the 6 moment tensor elements (Mxx, Myy, Mzz, Mxy, Mxz, Myz), the 3 eigenvalues (eig1, eig2, eig3) and 2 lune parameters (lune_lat, lune_lon).  We found that this made the class probabilities very unstable.  This may be an effect of over fitting when using too many features.  Testing with 5 features (lune_lat, lune_lon , eig1, eig2, eig3) also led to instabilities in the decision boundaries. We finally concluded that using only two features (lune_lat, lune_lon) obtained much more stable classification boundaries. 
+
+Use dictionary event_dict={0: ‘eq’, 1: ‘ex’, 2: ‘co’} to df.map(event_dict) labels the three numerical class types:
+1.	Earthquake “eq” class=0
+2.	Explosion “ex” class=1
+3.	Collapse “co” class=2
+
+Class imbalance:
+1.	eq 82.4%
+2.	ex 14.3 %
+3.	co 3.3 %
+
+Correlation
+
+lune_lat  lune_lon      eig1      eig2      eig3     label
+lune_lat  1.000000 -0.459587  0.351039  0.474907  0.495914  0.177268
+lune_lon -0.459587  1.000000 -0.003108  0.070986 -0.498022 -0.049500
+eig1      0.351039 -0.003108  1.000000  0.099220 -0.497361  0.054804
+eig2      0.474907  0.070986  0.099220  1.000000 -0.137325  0.059154
+eig3      0.495914 -0.498022 -0.497361 -0.137325  1.000000  0.100827
+label     0.177268 -0.049500  0.054804  0.059154  0.100827  1.000000
+
+Seaborn heatmap of correlation values
+ 
+
+Seaborn Pairplot
+
