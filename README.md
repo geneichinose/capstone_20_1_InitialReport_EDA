@@ -158,8 +158,10 @@ Classification decision boundaries and class probabilities for SVC classifier
 
 ## Deployment 
 
+We save the classification models and included a second jupyter notebook with code to apply classifiers to new data to obtain class probabilities.
+
 ## Summary of Findings
 
-1. SVC classifier works best so far but we are still evaluating 9 other classifier methods.
+1. The best set of features are lune_lat and lune_lon.  Adding additional features Mxx, Myy, ..., eig1, eig2, eig3 only caused overfitting and unstable decision bondaries. 
 
-2. 
+2. SVC classifier works best so far but we are still evaluating 9 other classifier methods.
