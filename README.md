@@ -1,7 +1,7 @@
-Capstone Project 20.1: Initial Report and Exploratory Data Analysis
+# Capstone Project 20.1: Initial Report and Exploratory Data Analysis
 version 02/14/2023
 
-Business Understanding
+## Business Understanding
 
 Nuclear explosion monitoring and detonation detection systems use signals collected from a global network of seismic, infrasonic hydroacoustic, and air-sampling sensors as well as an array of orbiting satellites with cameras and radiation detecting sensors (see CTBTO IMS).  All nuclear weapons testing has gone underground since 1960’s due to concerns of public safety from atmospheric tests.  U.S. and international monitoring agencies rely heavily on seismic sensors to detect, locate, and discriminate clandestine nuclear tests in a sea of background activity from natural earthquakes, volcanic activity, bolides, anthropogenic explosions from industrial activity, and cavity collapses from mining (see graphic). 
 
@@ -10,7 +10,7 @@ Early focus was on seismic signal detection (e.g., Ross et al., 2018; Kong et al
 
 In the world of nuclear explosion monitoring, the mantra is “miss no explosion” even at the expense of having false alarms.  The consequences of missed detection is much higher than falsely accusing a nation for testing a nuclear weapon (see new article on the 1997 Kara Sea Event).   In this case we will focus more on metrics like precision and balanced accuracy than recall, f1-score, or accuracy. 
 
-Data Understanding
+## Data Understanding
 
 The data features that we use are output from a physic based model of a seismic source. Seismic waveform time-series from a network of sensors can be fit using complex models that replicate the waveforms given an earth propagation response to a generalized model of the seismic source represented as a set of forces.  The data that we use here are called moment tensors determined from the linear inversion of seismic ground motions.  
 
@@ -18,7 +18,7 @@ The moment tensor (MT) is a mathematical representation of a generalized seismic
 
 We have compiled a set of moment tensor solutions from 1440 earthquakes, explosions, and cavity collapses. Collapses associated with mining activity and underground nuclear explosions are based on a preliminary small set of 43 events (Pasyanos et al., 2023; in prep). For explosions, we use the MT database for explosions from Pasyanos and Chiang (2022).  For the earthquake population, we use the same full MT solution dataset that was used for event identification in Pasyanos and Chiang (2021).  This includes the datasets of Dreger et al. (2000), Minson and Dreger (2008), Ford et al. (2009a), Boyd et al. (2015). The class labels for this dataset assumes that seismic events reported by the USGS are natural earthquakes.  The explosions are mainly from underground U.S. testing in southern Nevada (Department of Energy publication NV-209) but other chemical explosions and mining accidents worldwide are reported in news media. 
 
-Data Preparation
+## Data Preparation
 
 We used principal component analysis (PCA) to convert the 6 moment tensor elements (Mxx, Myy, Mzz, Mxy, Mxz, Myz) to 3 eigenvalues (eig1, eig2, eig3).  We also convert these 3-eigenvalues using a projection to spherical space (e.g., Tape and Tape, 2012) reducing the 3 eigenvalues to lune latitude and longitude.  The lune is a crescent-shape portion of a sphere (in this case just one-sixth of the full sphere) and latitude and longitude are adapted from the coordinates system commonly used in geography. The lune latitude is a measure of the seismic source’s isotropic component. The lune longitude is a measure of the compensated linear vector dipole.  All pure double-couple source “earthquakes” plot at the origin (latitude=0 and longitude=0; eig1=-1, eig2=0, eig3=+1). All pure explosions plot at the north pole (latitude=+90, longitude=0; eig1=+1, eig2=+1, eig3=+1) and all pure implosions plot at the south pole (latitude=-90, longitude=0; eig1=-1, eig2=-1, eig3=-1).  Interestingly, most nuclear explosions plot as an opening crack (latitude=60, longitude=-30; eig1=+1, eig2=+1, eig3=+2) and mine collapses as a closing crack (latitude=-60, longitude=+30; eig1=-1, eig2=-1, eig3=-2).   
 
@@ -48,4 +48,110 @@ Seaborn heatmap of correlation values
  
 
 Seaborn Pairplot
+
+Seaborn Scatter plot
+ 
+
+
+ 
+
+### PCA analysis
+
+features_mt = ['mxx', 'myy', 'mzz', 'mxy', 'mxz', 'myz']
+X_mtonly = df[features_mt]
+scaler = StandardScaler()
+Xscaled = scaler.fit_transform(X_mtonly)
+pca = PCA()
+pca.fit_transform(Xscaled)
+n_components = 6 features=6 n_samples=1440
+explained_variance = [ 4.65  1.36  0.00  0.00  0.00  0.00]
+explained_variance_ratio = [ 0.77  0.23  0.00  0.00  0.00  0.00]
+singular_values = [ 81.78  44.18  0.04  0.02  0.00  0.00]
+
+
+
+ 
+ 
+We are still working on PCA analysis but so far this is leading to unstable decision boundaries.  We are for now only using lune_lat and lune_lon
+
+## Modeling
+
+1.	Training testing split (train 60%; testing 40%)
+2.	See up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
+a.	See list of 10 classifiers below
+3.	Set up pipeline
+a.	Standard scalar 
+b.	Classifier with one-vs-rest
+4.	Set up hyperparameter search ranges (these depend on which classifier)
+5.	Grid search over hyperparameter
+a.	Use 5-fold cross validation
+b.	Scoring = ‘balanced_accuracy’
+i.	Balanced accuracy = (sensitivity + specificity)/ 2
+ii.	Sensitivity = recall = TP / (TP + FN)
+iii.	Specificity = TN / (TN + FP)
+
+6.	Save the model to a disk file for later predictions
+7.	Make a Pandas DataFrame table of scores and metric values
+a.	Class precision, recall, f1-score
+b.	Accuracy
+c.	Macro average
+d.	Weighted average
+8.	Compute the multiclass values for TP, TN, FP, and FN and plot confusion matrix
+9.	Plot multiclass ROC and average ROC curves, compare AUC values
+10.	When classifiers have clf.decision_function() method then plot the multiclass precsion and recall curves.
+
+For the modeling we tested 10 classifiers: 
+1.	Support Vector Machine (SVC) 
+2.	Decision Tree Classifier (DTC)
+3.	K-Neighbors Classifier (KNN)
+4.	Logistic Regression Classifier (LGR)
+5.	Random Forest Classifier (RFC)
+6.	Gaussian Process Classifier (GPC)
+7.	Multi-layer Perceptron Classifier (MLP)
+8.	Ada Boost Classifier (ABC)
+9.	Gaussian Naïve Bayes (GNB)
+10.	Quadratic Discriminant Analysis (QDA)
+
+## Evaluation
+
+              precision    recall  f1-score   support
+
+          eq       0.99      0.93      0.96       464
+          ex       0.76      0.97      0.85        86
+         col       0.81      1.00      0.90        26
+
+    accuracy                           0.94       576
+   macro avg       0.86      0.97      0.90       576
+weighted avg       0.95      0.94      0.94       576
+
+Table of scores and metrics for SVC classifier
+ 
+Confusion matrix for SVC classifier.
+
+
+ 
+ROC curve for SVC 
+
+ 
+Precision-Recall curve for SVC
+
+To evaluate the classifiers, we simulate 50,000 randomly distributed input features to compute class probabilities using clf.predict_proba(X)
+
+
+ 
+
+
+Classification decision boundaries and class probabilities for GPC classifier
+ 
+
+ 
+
+
+Classification decision boundaries and class probabilities for SVC classifier 
+
+## Deployment 
+
+## Summary of Findings
+
+1. SVC classifier works best so far but we are still evaluating 9 other classifier methods.
 
