@@ -23,7 +23,7 @@ We have compiled a set of moment tensor solutions from 1440 earthquakes, explosi
 
 We used principal component analysis (PCA) to convert the 6 moment tensor elements (Mxx, Myy, Mzz, Mxy, Mxz, Myz) to 3 eigenvalues (eig1, eig2, eig3).  We also convert these 3-eigenvalues using a projection to spherical space (e.g., Tape and Tape, 2012) reducing the 3 eigenvalues to lune latitude and longitude.  The lune is a crescent-shape portion of a sphere (in this case just one-sixth of the full sphere) and latitude and longitude are adapted from the coordinates system commonly used in geography. The lune latitude is a measure of the seismic source’s isotropic component. The lune longitude is a measure of the compensated linear vector dipole.  All pure double-couple source “earthquakes” plot at the origin (latitude=0 and longitude=0; eig1=-1, eig2=0, eig3=+1). All pure explosions plot at the north pole (latitude=+90, longitude=0; eig1=+1, eig2=+1, eig3=+1) and all pure implosions plot at the south pole (latitude=-90, longitude=0; eig1=-1, eig2=-1, eig3=-1).  Interestingly, most nuclear explosions plot as an opening crack (latitude=60, longitude=-30; eig1=+1, eig2=+1, eig3=+2) and mine collapses as a closing crack (latitude=-60, longitude=+30; eig1=-1, eig2=-1, eig3=-2).   
 
-The original input features used to train the classifier models are the 6 moment tensor elements (Mxx, Myy, Mzz, Mxy, Mxz, Myz), the 3 eigenvalues (eig1, eig2, eig3) and 2 lune parameters (lune_lat, lune_lon).  We found that this made the class probabilities very unstable.  This may be an effect of over fitting when using too many features.  Testing with 5 features (lune_lat, lune_lon , eig1, eig2, eig3) also led to instabilities in the decision boundaries. We finally concluded that using only two features (lune_lat, lune_lon) obtained much more stable classification boundaries. 
+The original input features used to train the classifier models are the 6 moment tensor elements (Mxx, Myy, Mzz, Mxy, Mxz, Myz), the 3 eigenvalues (eig1, eig2, eig3) and 2 lune parameters (lune_lat, lune_lon).  We found that this made the class probabilities very unstable.  This may be an effect of over fitting when using too many features.  Testing with 5 features (lune_lat, lune_lon , eig1, eig2, eig3) also led to instabilities in the decision boundaries. We finally concluded that using only two features (lune_lat, lune_lon) obtained stable classification boundaries. 
 
 Use dictionary event_dict={0: ‘eq’, 1: ‘ex’, 2: ‘co’} to df.map(event_dict) labels the three numerical class types:
 1. Earthquake “eq” class=0
@@ -64,7 +64,7 @@ GMT plot
 
 ![lune.png](plots/lune.png)
 
-Same plot as above of two features (lune_lat and lune_lon) used to train classifiers in spherical Hammer projection (longitude,latitude) coordinate system
+Same plot as above of two features (lune_lat and lune_lon) used to train classifiers in spherical Hammer projection (longitude,latitude) coordinate system.  This type of Hammer spherical projection is preferred over others including Cartesian because it preserves the true physical distances between points and the areas of source types.  This is similar to the distortion some map projections make on the area of land masses near the poles.  
 
 ### PCA analysis
 
