@@ -56,6 +56,16 @@ Seaborn Scatter plot
  
 ![seaborn_scatterplot.png](plots/seaborn_scatterplot.png)
 
+Two features (lune_lat and lune_lon) used to train classifiers in linear (x,y) Cartesian cooridinate system
+
+![seaborn_scatterplot.png](plots/seaborn_scatterplot.png)
+
+GMT plot
+
+![lune.jpg](plots/lune.jpg)
+
+Same plot as above of two features (lune_lat and lune_lon) used to train classifiers in spherical Hammer projection (longitude,latitude) coordinate system
+
 ### PCA analysis
 
 <pre>
@@ -83,18 +93,17 @@ a.	Standard scalar
 b.	Classifier with one-vs-rest
 4.	Set up hyperparameter search ranges (these depend on which classifier)
 5.	Grid search over hyperparameter
-a.	Use 5-fold cross validation
-b.	Scoring = ‘balanced_accuracy’
-i.	Balanced accuracy = (sensitivity + specificity)/ 2
-ii.	Sensitivity = recall = TP / (TP + FN)
-iii.	Specificity = TN / (TN + FP)
-
+..a.	Use 5-fold cross validation
+..b.	Scoring = ‘balanced_accuracy’
+..i.	Balanced accuracy = (sensitivity + specificity)/ 2
+..ii.	Sensitivity = recall = TP / (TP + FN)
+..iii.	Specificity = TN / (TN + FP)
 6.	Save the model to a disk file for later predictions
 7.	Make a Pandas DataFrame table of scores and metric values
-a.	Class precision, recall, f1-score
-b.	Accuracy
-c.	Macro average
-d.	Weighted average
+..a.	Class precision, recall, f1-score
+..b.	Accuracy
+..c.	Macro average
+..d.	Weighted average
 8.	Compute the multiclass values for TP, TN, FP, and FN and plot confusion matrix
 9.	Plot multiclass ROC and average ROC curves, compare AUC values
 10.	When classifiers have clf.decision_function() method then plot the multiclass precsion and recall curves.
