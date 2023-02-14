@@ -15,7 +15,7 @@ The data features that we use are output from a physic based model of a seismic 
 
 The moment tensor (MT) is a mathematical representation of a generalized seismic source that quantify a set of forces and orientations based on the source’s radiation pattern.  The MT is mathematically represented as a 2nd-order symmetric tensor expressed as a 3-by-3 matrix (i.e., as three shear force couples and three linear vector dipole forces).  In a Cartesian coordinate system (i.e., x-axis: +east/-west, y-axis: +north/-south, z-axis: +up/-down), the dipole forces are contained along the diagonal Mxx, Myy, and Mzz of the tensor.  The off-diagonal elements Mxy, Mxz, and Myz contain the shear force couples. Through the conservation of angular momentum, there are two force-couples (a.k.a. the double-couple), with one acting in the opposite direction to the other. The MT is symmetrical and therefore Mxy=Myx, Mxz=Mzx, and Myz=Mzy resulting in only six of nine unique tensor elements, that can also be in vector form M (see MT diagram).  
 
-We have compiled a set of moment tensor solutions from 1440 earthquakes, explosions, and cavity collapses. Collapses associated with mining activity and underground nuclear explosions are based on a preliminary small set of 43 events (Pasyanos et al., 2023; in prep). For explosions, we use the MT database for explosions from Pasyanos and Chiang (2022).  For the earthquake population, we use the same full MT solution dataset that was used for event identification in Pasyanos and Chiang (2021).  This includes the datasets of Dreger et al. (2000), Minson and Dreger (2008), Ford et al. (2009a), Boyd et al. (2015). The class labels for this dataset assumes that seismic events reported by the USGS are natural earthquakes.  The explosions are mainly from underground U.S. testing in southern Nevada (Department of Energy publication NV-209) but other chemical explosions and mining accidents worldwide are reported in news media. 
+We have compiled a set of moment tensor solutions from 1440 earthquakes, explosions, and cavity collapses. Collapses associated with mining activity and underground nuclear explosions are based on a preliminary small set of 43 events (Pasyanos et al., 2023; in prep). For explosions, we use the MT database for explosions from [Pasyanos and Chiang (2022)](https://doi.org/10.1785/0120210167).  For the earthquake population, we use the same full MT solution dataset that was used for event identification in Pasyanos and Chiang (2022).  This includes the datasets of Dreger et al. (2000), [Minson and Dreger (2008)](https://doi.org/10.1111/j.1365-246X.2008.03797.x), [Ford et al. (2009)](https://doi.org/10.1029/2008JB005743), [Boyd et al. (2015)](https://doi.org/10.1785/0120140285). The class labels for this dataset assumes that seismic events reported by the USGS are natural earthquakes.  The explosions are mainly from underground U.S. testing in southern Nevada ([Department of Energy publication NV-209](https://www.nnss.gov/docs/docs_librarypublications/doe_nv-209_rev16.pdf)) but other chemical explosions and mining accidents worldwide are reported in news media. 
 
 ## Data Preparation
 
@@ -34,7 +34,7 @@ Class imbalance:
 3.	co 3.3 %
 
 Correlation
-
+<pre>
 lune_lat  lune_lon      eig1      eig2      eig3     label
 lune_lat  1.000000 -0.459587  0.351039  0.474907  0.495914  0.177268
 lune_lon -0.459587  1.000000 -0.003108  0.070986 -0.498022 -0.049500
@@ -42,6 +42,7 @@ eig1      0.351039 -0.003108  1.000000  0.099220 -0.497361  0.054804
 eig2      0.474907  0.070986  0.099220  1.000000 -0.137325  0.059154
 eig3      0.495914 -0.498022 -0.497361 -0.137325  1.000000  0.100827
 label     0.177268 -0.049500  0.054804  0.059154  0.100827  1.000000
+</pre>
 
 Seaborn heatmap of correlation values
  
