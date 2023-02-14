@@ -35,7 +35,7 @@ Class imbalance:
 
 Correlation
 <pre>
-lune_lat  lune_lon      eig1      eig2      eig3     label
+          lune_lat  lune_lon      eig1      eig2      eig3     label
 lune_lat  1.000000 -0.459587  0.351039  0.474907  0.495914  0.177268
 lune_lon -0.459587  1.000000 -0.003108  0.070986 -0.498022 -0.049500
 eig1      0.351039 -0.003108  1.000000  0.099220 -0.497361  0.054804
@@ -57,6 +57,7 @@ Seaborn Scatter plot
 
 ### PCA analysis
 
+<pre>
 features_mt = ['mxx', 'myy', 'mzz', 'mxy', 'mxz', 'myz']
 X_mtonly = df[features_mt]
 scaler = StandardScaler()
@@ -67,8 +68,7 @@ n_components = 6 features=6 n_samples=1440
 explained_variance = [ 4.65  1.36  0.00  0.00  0.00  0.00]
 explained_variance_ratio = [ 0.77  0.23  0.00  0.00  0.00  0.00]
 singular_values = [ 81.78  44.18  0.04  0.02  0.00  0.00]
-
-
+</pre>
 
  
  
