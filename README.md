@@ -62,7 +62,7 @@ Two features (lune_lat and lune_lon) used to train classifiers in linear (x,y) C
 
 GMT plot
 
-![lune.jpg](plots/lune.jpg)
+![lune.png](plots/lune.png)
 
 Same plot as above of two features (lune_lat and lune_lon) used to train classifiers in spherical Hammer projection (longitude,latitude) coordinate system
 
