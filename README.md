@@ -24,14 +24,14 @@ We used principal component analysis (PCA) to convert the 6 moment tensor elemen
 The original input features used to train the classifier models are the 6 moment tensor elements (Mxx, Myy, Mzz, Mxy, Mxz, Myz), the 3 eigenvalues (eig1, eig2, eig3) and 2 lune parameters (lune_lat, lune_lon).  We found that this made the class probabilities very unstable.  This may be an effect of over fitting when using too many features.  Testing with 5 features (lune_lat, lune_lon , eig1, eig2, eig3) also led to instabilities in the decision boundaries. We finally concluded that using only two features (lune_lat, lune_lon) obtained much more stable classification boundaries. 
 
 Use dictionary event_dict={0: ‘eq’, 1: ‘ex’, 2: ‘co’} to df.map(event_dict) labels the three numerical class types:
-1.	Earthquake “eq” class=0
-2.	Explosion “ex” class=1
-3.	Collapse “co” class=2
+1. Earthquake “eq” class=0
+2. Explosion  “ex” class=1
+3. Collapse   “co” class=2
 
 Class imbalance:
-1.	eq 82.4%
-2.	ex 14.3 %
-3.	co 3.3 %
+1. eq 82.4%
+2. ex 14.3%
+3. co  3.3%
 
 Correlation
 <pre>
@@ -93,32 +93,32 @@ a.	Standard scalar
 b.	Classifier with one-vs-rest
 4.	Set up hyperparameter search ranges (these depend on which classifier)
 5.	Grid search over hyperparameter
-..a.	Use 5-fold cross validation
-..b.	Scoring = ‘balanced_accuracy’
-..i.	Balanced accuracy = (sensitivity + specificity)/ 2
-..ii.	Sensitivity = recall = TP / (TP + FN)
-..iii.	Specificity = TN / (TN + FP)
+..*	Use 5-fold cross validation
+..*	Scoring = ‘balanced_accuracy’
+..*	Balanced accuracy = (sensitivity + specificity)/ 2
+..*	Sensitivity = recall = TP / (TP + FN)
+..*	Specificity = TN / (TN + FP)
 6.	Save the model to a disk file for later predictions
 7.	Make a Pandas DataFrame table of scores and metric values
-..a.	Class precision, recall, f1-score
-..b.	Accuracy
-..c.	Macro average
-..d.	Weighted average
+..*	Class precision, recall, f1-score
+..*	Accuracy
+..*	Macro average
+..*	Weighted average
 8.	Compute the multiclass values for TP, TN, FP, and FN and plot confusion matrix
 9.	Plot multiclass ROC and average ROC curves, compare AUC values
 10.	When classifiers have clf.decision_function() method then plot the multiclass precsion and recall curves.
 
 For the modeling we tested 10 classifiers: 
-1.	Support Vector Machine (SVC) 
-2.	Decision Tree Classifier (DTC)
-3.	K-Neighbors Classifier (KNN)
-4.	Logistic Regression Classifier (LGR)
-5.	Random Forest Classifier (RFC)
-6.	Gaussian Process Classifier (GPC)
-7.	Multi-layer Perceptron Classifier (MLP)
-8.	Ada Boost Classifier (ABC)
-9.	Gaussian Naïve Bayes (GNB)
-10.	Quadratic Discriminant Analysis (QDA)
+1. Support Vector Machine (SVC) 
+2. Decision Tree Classifier (DTC)
+3. K-Neighbors Classifier (KNN)
+4. Logistic Regression Classifier (LGR)
+5. Random Forest Classifier (RFC)
+6. Gaussian Process Classifier (GPC)
+7. Multi-layer Perceptron Classifier (MLP)
+8. Ada Boost Classifier (ABC)
+9. Gaussian Naïve Bayes (GNB)
+10. Quadratic Discriminant Analysis (QDA)
 
 ## Evaluation
 
