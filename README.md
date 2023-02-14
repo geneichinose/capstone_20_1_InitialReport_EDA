@@ -58,8 +58,6 @@ Seaborn Scatter plot
 
 Two features (lune_lat and lune_lon) used to train classifiers in linear (x,y) Cartesian cooridinate system
 
-![seaborn_scatterplot.png](plots/seaborn_scatterplot.png)
-
 GMT plot
 
 ![lune.png](plots/lune.png)
@@ -85,28 +83,28 @@ We are still working on PCA analysis but so far this is leading to unstable deci
 
 ## Modeling
 
-1.	Training testing split (train 60%; testing 40%)
-2.	See up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
-a.	See list of 10 classifiers below
-3.	Set up pipeline
-a.	Standard scalar 
-b.	Classifier with one-vs-rest
-4.	Set up hyperparameter search ranges (these depend on which classifier)
-5.	Grid search over hyperparameter
-..*	Use 5-fold cross validation
-..*	Scoring = ‘balanced_accuracy’
-..*	Balanced accuracy = (sensitivity + specificity)/ 2
-..*	Sensitivity = recall = TP / (TP + FN)
-..*	Specificity = TN / (TN + FP)
-6.	Save the model to a disk file for later predictions
-7.	Make a Pandas DataFrame table of scores and metric values
-..*	Class precision, recall, f1-score
-..*	Accuracy
-..*	Macro average
-..*	Weighted average
-8.	Compute the multiclass values for TP, TN, FP, and FN and plot confusion matrix
-9.	Plot multiclass ROC and average ROC curves, compare AUC values
-10.	When classifiers have clf.decision_function() method then plot the multiclass precsion and recall curves.
+1.Training testing split (train 60%; testing 40%)
+2.See up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
+  * See list of 10 classifiers below
+3.Set up pipeline
+  * Standard scalar 
+  * Classifier with one-vs-rest
+4.Set up hyperparameter search ranges (these depend on which classifier)
+5.Grid search over hyperparameter
+  * Use 5-fold cross validation
+  * Scoring = ‘balanced_accuracy’
+  * Balanced accuracy = (sensitivity + specificity)/ 2
+  * Sensitivity = recall = TP / (TP + FN)
+  * Specificity = TN / (TN + FP)
+6. Save the model to a disk file for later predictions
+7. Make a Pandas DataFrame table of scores and metric values
+  * Class precision, recall, f1-score
+  * Accuracy
+  * Macro average
+  * Weighted average
+8. Compute the multiclass values for TP, TN, FP, and FN and plot confusion matrix
+9. Plot multiclass ROC and average ROC curves, compare AUC values
+10. When classifiers have clf.decision_function() method then plot the multiclass precsion and recall curves.
 
 For the modeling we tested 10 classifiers: 
 1. Support Vector Machine (SVC) 
@@ -164,3 +162,4 @@ Classification decision boundaries and class probabilities for SVC classifier
 
 1. SVC classifier works best so far but we are still evaluating 9 other classifier methods.
 
+2. 
