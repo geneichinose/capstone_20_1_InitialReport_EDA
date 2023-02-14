@@ -109,7 +109,7 @@ We are still working on PCA analysis but so far this is leading to unstable deci
   * Balanced accuracy = (sensitivity + specificity)/ 2
   * Sensitivity = recall = TP / (TP + FN)
   * Specificity = TN / (TN + FP)
-7. Save the model to a disk file for later predictions
+7. Save the trained models to a disk file for later class predictions and class probabilites using a set of synthetics
 8. Make a Pandas DataFrame table of scores and metric values
   * Class precision, recall, f1-score
   * Accuracy
