@@ -83,14 +83,14 @@ We are still working on PCA analysis but so far this is leading to unstable deci
 
 ## Modeling
 
-1.Training testing split (train 60%; testing 40%)
-2.See up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
+1. Training testing split (train 60%; testing 40%)
+2. See up one-vs-rest version of classifiers (options class_weight=’balanced’ when available) for multiclass problems.
   * See list of 10 classifiers below
-3.Set up pipeline
+3. Set up pipeline
   * Standard scalar 
   * Classifier with one-vs-rest
-4.Set up hyperparameter search ranges (these depend on which classifier)
-5.Grid search over hyperparameter
+4. Set up hyperparameter search ranges (these depend on which classifier)
+5. Grid search over hyperparameter
   * Use 5-fold cross validation
   * Scoring = ‘balanced_accuracy’
   * Balanced accuracy = (sensitivity + specificity)/ 2
